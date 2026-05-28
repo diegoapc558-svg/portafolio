@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portafolio — Diego Pérez</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Archivo:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #141414;
+      --border: #2a2a2a;
+      --text: #e8e2d9;
+      --muted: #6b6560;
+      --accent: #c9a96e;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Archivo', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      cursor: crosshair;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.4rem 3rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,.85);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      letter-spacing: .08em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: .75rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .25s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 5rem;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 5rem 3rem 5rem 3rem;
+    }
+
+    .hero-eyebrow {
+      font-size: .7rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 7vw, 7rem);
+      font-weight: 300;
+      line-height: .95;
+      margin-bottom: 2rem;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-bio {
+      max-width: 38ch;
+      font-size: .9rem;
+      color: var(--muted);
+      line-height: 1.8;
+      border-left: 1px solid var(--accent);
+      padding-left: 1.2rem;
+    }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: grayscale(20%);
+      transition: filter .5s;
+    }
+    .hero-img:hover { filter: grayscale(0%); }
+
+    .hero-img-placeholder {
+      width: 100%; height: 100%;
+      min-height: 70vh;
+      background: var(--surface);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1rem;
+      border-left: 1px solid var(--border);
+    }
+
+    .hero-img-placeholder span {
+      font-size: .7rem; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--muted);
+    }
+
+    .placeholder-icon { font-size: 3rem; opacity: .15; }
+
+    /* ── SECCIONES GENERALES ── */
+    section { padding: 6rem 3rem; }
+
+    .section-label {
+      font-size: .65rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1; max-width: 60px;
+      height: 1px; background: var(--accent);
+    }
+
+    /* ── PROYECTO AUTORAL ── */
+    #proyecto { border-top: 1px solid var(--border); }
+
+    .proyecto-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 5rem;
+      align-items: start;
+    }
+
+    .proyecto-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 4vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+    }
+
+    .statement-box {
+      padding: 2.5rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      position: relative;
+    }
+
+    .statement-box::before {
+      content: '"';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 6rem;
+      line-height: 0;
+      position: absolute;
+      top: 3rem; left: 1.5rem;
+      color: var(--accent);
+      opacity: .3;
+    }
+
+    .statement-label {
+      font-size: .65rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+    }
+
+    .statement-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-style: italic;
+      line-height: 1.8;
+      color: #c4bdb5;
+    }
+
+    /* GRILLA FOTOS */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .photo-grid.has-feature {
+      grid-template-columns: 2fr 1fr 1fr;
+    }
+
+    .photo-cell {
+      position: relative;
+      overflow: hidden;
+      background: var(--surface);
+      aspect-ratio: 3/4;
+    }
+
+    .photo-cell.wide { aspect-ratio: 4/3; }
+    .photo-cell.square { aspect-ratio: 1/1; }
+    .photo-cell.tall { grid-row: span 2; aspect-ratio: unset; }
+
+    .photo-cell img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .6s ease, filter .4s;
+      filter: grayscale(15%);
+    }
+
+    .photo-cell:hover img {
+      transform: scale(1.04);
+      filter: grayscale(0%);
+    }
+
+    .photo-number {
+      position: absolute;
+      bottom: .8rem; left: .8rem;
+      font-size: .6rem;
+      letter-spacing: .2em;
+      color: rgba(255,255,255,.4);
+    }
+
+    .photo-placeholder {
+      width: 100%; height: 100%; min-height: 260px;
+      background: var(--surface);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: .6rem;
+      border: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    .photo-placeholder p {
+      font-size: .65rem; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--border);
+    }
+
+    /* ── PORTAFOLIO ── */
+    #portafolio { border-top: 1px solid var(--border); }
+
+    .portfolio-intro {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+      margin-bottom: 5rem;
+      align-items: center;
+    }
+
+    .portfolio-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    .portfolio-desc {
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.9;
+    }
+
+    .serie { margin-bottom: 5rem; }
+
+    .serie-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .serie-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+    }
+
+    .serie-meta {
+      font-size: .7rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .serie-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+    }
+
+    /* ── SOBRE MÍ ── */
+    #sobre-mi {
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+    }
+
+    .author-photo-wrap { position: relative; }
+
+    .author-photo-wrap img,
+    .author-photo-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+    }
+
+    .author-photo-placeholder {
+      background: var(--surface);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: .8rem;
+      border: 1px solid var(--border);
+    }
+
+    .author-photo-wrap::before {
+      content: '';
+      position: absolute;
+      top: 1rem; left: 1rem;
+      right: -1rem; bottom: -1rem;
+      border: 1px solid var(--accent);
+      z-index: -1;
+    }
+
+    .author-info { display: flex; flex-direction: column; justify-content: center; }
+
+    .author-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 300;
+      line-height: 1;
+      margin-bottom: 2rem;
+    }
+
+    .author-bio-text {
+      font-size: .9rem;
+      color: #b0aa9f;
+      line-height: 1.9;
+      margin-bottom: 2rem;
+    }
+
+    .author-tags {
+      display: flex; flex-wrap: wrap; gap: .5rem;
+      margin-top: 1rem;
+    }
+
+    .tag {
+      font-size: .65rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: .35rem .8rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--muted);
+    }
+
+    .footer-copy {
+      font-size: .7rem;
+      letter-spacing: .1em;
+      color: var(--border);
+    }
+
+    /* ── ANIMACIONES ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow { animation: fadeUp .8s ease both; }
+    .hero-title   { animation: fadeUp .8s .15s ease both; }
+    .hero-bio     { animation: fadeUp .8s .3s ease both; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+
+      #hero { grid-template-columns: 1fr; }
+      .hero-right { min-height: 50vw; }
+
+      .proyecto-header,
+      .portfolio-intro,
+      #sobre-mi { grid-template-columns: 1fr; gap: 2rem; }
+
+      .photo-grid,
+      .photo-grid.has-feature { grid-template-columns: repeat(2, 1fr); }
+      .serie-grid { grid-template-columns: repeat(2, 1fr); }
+
+      section { padding: 4rem 1.5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-name" href="#hero">Diego Pérez</a>
+  <ul class="nav-links">
+    <li><a href="#proyecto">Proyecto</a></li>
+    <li><a href="#portafolio">Portafolio</a></li>
+    <li><a href="#sobre-mi">Sobre mí</a></li>
+  </ul>
+</nav>
+
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Portafolio fotográfico · 2026</p>
+
+    <h1 class="hero-title">
+      Diego<br><em>Pérez</em>
+    </h1>
+
+    <p class="hero-bio">
+      Ingeniero electrónico y fotógrafo desde Bogotá.
+      Una mirada que encuentra lo extraordinario en lo cotidiano.
+    </p>
+  </div>
+
+  <div class="hero-right">
+    <!--
+      CÓMO PONER TU FOTO DE PORTADA:
+    -->
+    <img class="hero-img" src="fotos/portada.png" alt="Portada Diego Pérez" />
+  </div>
+</section>
+
+
+<!-- PROYECTO AUTORAL -->
+<section id="proyecto">
+
+  <p class="section-label">Proyecto autoral</p>
+
+  <div class="proyecto-header">
+
+    <h2 class="proyecto-title">
+      Portafolio de<br>Diego Pérez
+    </h2>
+
+    <div class="statement-box">
+      <p class="statement-label">Statement</p>
+      <p class="statement-text">
+        Hay lugares dentro de la universidad que uno aprende a conocer
+        no por su arquitectura, sino por lo que ocurrió en ellos.
+        Un pasillo donde se esperó un resultado, un rincón donde se celebró
+        con amigos después de una entrega, una sala donde un proyecto
+        se cayó a pedazos y hubo que empezar de nuevo.<br><br>
+
+        Este trabajo nació de la necesidad de registrar esos espacios
+        antes de dejarlos atrás. No como documento, sino como memoria.
+        Cada imagen guarda algo que la institución no sabe que tiene:
+        la frustración de una noche sin dormir, la risa de alguien
+        que ya no estudia aquí, la quietud de un lugar vacío
+        que alguna vez estuvo lleno de tensión.<br><br>
+
+        Fotografiar la universidad fue una forma de despedirme
+        de una versión de mí mismo que solo existe en esos muros.
+      </p>
+    </div>
+
+  </div>
+
+  <!--
+    ═══════════════════════════════════════════════
+    CÓMO AGREGAR TUS FOTOS AL PROYECTO AUTORAL:
+
+    Dentro de cada <div class="photo-cell ...">
+    reemplaza el bloque <div class="photo-placeholder">
+    por una etiqueta <img> así:
+
+    ANTES:
+      <div class="photo-placeholder">
+        <span class="placeholder-icon">◻</span>
+        <p>foto 01</p>
+      </div>
+
+    DESPUÉS:
+      <img src="fotos/proyecto/01.png" alt="Descripción de la foto" />
+
+    Guarda tus fotos en la carpeta: fotos/proyecto/
+    ═══════════════════════════════════════════════
+  -->
+  <!-- 4 fotos en grilla 2 columnas: foto grande izquierda, dos apiladas derecha, foto ancha abajo -->
+  <div class="photo-grid" style="grid-template-columns: 1.3fr 1fr; grid-template-rows: auto auto;">
+
+    <div class="photo-cell tall">
+      <img src="fotos/proyecto/01.png" alt="Proyecto fotográfico 01" />
+      <span class="photo-number">01</span>
+    </div>
+
+    <div class="photo-cell">
+      <img src="fotos/proyecto/02.png" alt="Proyecto fotográfico 02" />
+      <span class="photo-number">02</span>
+    </div>
+
+    <div class="photo-cell">
+      <img src="fotos/proyecto/03.png" alt="Proyecto fotográfico 03" />
+      <span class="photo-number">03</span>
+    </div>
+
+    <div class="photo-cell wide" style="grid-column: 1 / -1;">
+      <img src="fotos/proyecto/04.png" alt="Proyecto fotográfico 04" />
+      <span class="photo-number">04</span>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- PORTAFOLIO -->
+<section id="portafolio">
+
+  <p class="section-label">Portafolio</p>
+
+  <div class="portfolio-intro">
+    <h2 class="portfolio-title">Trabajo<br>previo</h2>
+    <p class="portfolio-desc">
+      Selección de trabajos realizados durante el primer y segundo corte del semestre.
+      Cada serie responde a un ejercicio distinto de observación.
+    </p>
+  </div>
+
+  <!--
+    CÓMO AGREGAR FOTOS AL PORTAFOLIO:
+    Igual que en el proyecto autoral — reemplaza cada
+    <div class="photo-placeholder"> por:
+    <img src="fotos/corte1/01.png" alt="descripción" />
+
+    Guarda las fotos del primer corte en: fotos/corte1/
+    Guarda las fotos del segundo corte en: fotos/corte2/
+  -->
+
+  <!-- SERIE 1 -->
+  <div class="serie">
+    <div class="serie-header">
+      <h3 class="serie-name">Primer corte — Retrato</h3>
+      <span class="serie-meta">Febrero 2026</span>
+    </div>
+    <div class="serie-grid" style="grid-template-columns: repeat(2, 1fr);">
+      <div class="photo-cell square">
+        <img src="fotos/corte1/01.png" alt="Primer corte 01" />
+      </div>
+      <div class="photo-cell square">
+        <img src="fotos/corte1/02.png" alt="Primer corte 02" />
+      </div>
+    </div>
+  <div class="serie">
+    <div class="serie-header">
+      <h3 class="serie-name">Segundo corte — Serie fotográfica</h3>
+      <span class="serie-meta">Abril 2026</span>
+    </div>
+    <div class="serie-grid" style="grid-template-columns: repeat(2, 1fr);">
+      <div class="photo-cell square">
+        <img src="fotos/corte2/01.png" alt="Segundo corte 01" />
+      </div>
+      <div class="photo-cell square">
+        <img src="fotos/corte2/02.png" alt="Segundo corte 02" />
+      </div>
+    </div>
+
+</section>
+
+
+<!-- SOBRE MÍ -->
+<section id="sobre-mi">
+
+  <div class="author-photo-wrap">
+    <!--
+      CÓMO PONER TU AUTORRETRATO:
+    <img src="fotos/autorretrato.png" alt="Diego Pérez" />
+  </div>
+
+  <div class="author-info">
+    <p class="section-label">Sobre mí</p>
+
+    <h2 class="author-name">
+      Diego<br>Pérez
+    </h2>
+
+    <p class="author-bio-text">
+      Soy Diego Pérez, ingeniero electrónico egresado de la Universidad Distrital Francisco José de Caldas,
+      en Bogotá, Colombia. Me caracterizo por ser una persona profundamente comprometida con lo que hago
+      y con una filosofía de vida clara: disfrutar y vivir el presente al máximo.<br><br>
+
+      Creo en el crecimiento personal constante, por lo que siempre busco aprender y rescatar la mejor
+      lección de cada experiencia, sin importar si el momento fue bueno o malo.<br><br>
+
+      Fuera del mundo tecnológico, encuentro mi mayor fuente de tranquilidad y desconexión en la compañía
+      de mis gatos, quienes siempre me alegran el día. Este portafolio reúne el trabajo de un semestre
+      donde aprendí a mirar antes de disparar.
+    </p>
+
+    <div class="author-tags">
+      <span class="tag">Ingeniería Electrónica</span>
+      <span class="tag">Documental</span>
+      <span class="tag">Bogotá</span>
+      <span class="tag">Universidad Distrital</span>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Diego Pérez — Portafolio fotográfico</span>
+  <span class="footer-copy">© 2026 · Todos los derechos reservados</span>
+</footer>
+
+</body>
+</html>
